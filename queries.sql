@@ -125,3 +125,52 @@ WHERE MONTH(fecha_publicacion) BETWEEN '01' AND '02'
 SELECT *
 FROM posts
 WHERE MONTH(fecha_publicacion) = '04'
+
+SELECT * FROM libros WHERE categorias IN ("Informática","Inglés","Diseño");
+
+-- ! Utiliznado WHERE nulo y no nulo
+
+SELECT *
+FROM posts
+WHERE usuario_id IS NULL;
+
+SELECT *
+FROM posts
+WHERE usuario_id IS NOT NULL;
+
+SELECT *
+FROM posts
+WHERE usuario_id IS NOT NULL
+	AND estatus = 'activo'
+	AND id < 50
+	AND categoria_id = 2
+	AND YEAR(fecha_publicacion) = '2025';
+
+-- ! GROUP BY
+
+SELECT estatus, COUNT(*) post_quantity
+FROM posts
+GROUP BY estatus;
+
+-- Aparte de la función COUNT, podemos encontrar las siguientes funciones de agregado:
+-- AVG Calcula el promedio
+-- COUNT Cuenta los registros de un campo
+-- SUM Suma los valores de un campo
+-- MAX Devuelve el maximo de un campo
+-- MIN Devuelve el mínimo de un campo
+
+SELECT estatus, SUM(*) suma_id
+FROM posts
+GROUP BY estatus;
+
+SELECT YEAR(fecha_publicacion) AS $post_year, COUNT(*) AS post_quantity
+from posts
+GROUP BY $post_year;
+
+SELECT MONTHNAME(fecha_publicacion) AS $post_month, COUNT(*) AS post_quantity
+from posts
+GROUP BY $post_month;
+
+SELECT estatus MONTHNAME(fecha_publicacion) AS $post_month, COUNT(*) AS post_quantity
+from posts
+GROUP BY estatus, $post_month;
